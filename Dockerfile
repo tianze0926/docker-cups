@@ -6,10 +6,8 @@ RUN pacman -Syu --noconfirm &&\
 RUN useradd --create-home --no-user-group -G 26 abc &&\
     echo 'abc ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
 USER abc
-RUN cd &&\
-    git clone https://aur.archlinux.org/yay-bin.git &&\
-    cd yay-bin &&\
-    makepkg --noconfirm -si &&\
+RUN cd && git clone https://aur.archlinux.org/yay-bin.git &&\
+    cd yay-bin && makepkg --noconfirm -si &&\
     cd .. && rm -rf yay-bin
 
 # install
@@ -20,7 +18,7 @@ COPY --chown=root:cups cups-files.conf /etc/cups/
 # cleanup
 RUN yes | yay -Scc
 USER root
-RUN pacman -Rs --noconfirm git base-devel yay &&\
+RUN pacman -Rs --noconfirm git base-devel yay-bin &&\
     yes | pacman -Scc &&\
     echo '' > /etc/sudoers
 
