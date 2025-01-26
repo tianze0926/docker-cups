@@ -18,11 +18,11 @@ COPY --chown=root:cups cupsd.conf /etc/cups/
 COPY --chown=root:cups cups-files.conf /etc/cups/
 
 # cleanup
-RUN yes | yay -Scc &&\
-    echo '' > /etc/sudoers
+RUN yes | yay -Scc
 USER root
 RUN pacman -Rs --noconfirm git base-devel yay &&\
-    yes | pacman -Scc
+    yes | pacman -Scc &&\
+    echo '' > /etc/sudoers
 
 # merge layers
 FROM scratch
